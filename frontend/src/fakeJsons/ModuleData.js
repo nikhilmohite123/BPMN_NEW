@@ -26,7 +26,7 @@ import {
   Award,
   TrendingUp
 } from 'lucide-react';
-
+ 
 export const modulesData = [
   {
     id: 'audit-tracker',
@@ -53,7 +53,7 @@ export const modulesData = [
     icon: Volume2,
     color: '#ff6b35',
     bgColor: '#fff3e0',
-    href: '/Speakup'
+    href: '/speakup'
   },
   {
     id: 'business-development',
@@ -308,3 +308,5 @@ export const modulesData = [
     href: '/video'
   }
 ];
+ 
+ 

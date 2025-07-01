@@ -7,13 +7,18 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import RootLayout from '../layouts/rootlayout/RootLayout';
-import { Home, Login } from '../pages';
+import { Home, Login, SpeakUp } from '../pages';
+
 function Router() {
     const router = createBrowserRouter(
         createRoutesFromElements(
-            <Route path='/' element={<RootLayout/>}>
-                <Route index element={<Home />} />
-            </Route>
+            <>
+                <Route path='/login' element={<Login />} />
+                <Route path='/' element={<RootLayout />}>
+                    <Route index element={<Home />} />
+                    <Route path='/speakup' element={<SpeakUp/>}/>
+                </Route>
+            </>
         )
     );
 

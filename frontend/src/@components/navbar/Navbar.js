@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { LogOut, User, ChevronDown } from 'lucide-react';
 import logo from '../../assets/logo.png';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate =useNavigate();
   
   // Mock user data - replace with actual user data from your auth system
   const user = {
@@ -32,11 +34,14 @@ function Navbar() {
       <div className="flex items-center justify-between max-w-full mx-auto">
         {/* Left side - Logo */}
         <div className="flex items-center">
-          <img
+          <NavLink to="/">
+               <img
             src={logo}
             alt="EPL India"
             className="rounded-lg object-contain"
           />
+          </NavLink>
+    
         </div>
 
         {/* Right side - User section */}
