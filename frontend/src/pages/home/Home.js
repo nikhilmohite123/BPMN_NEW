@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import ModuleCard from './components/ModuleCard'
-import HeaderCard from './components/HeaderCard' // Add this import
+import ModuleCard from '../../components/home/ModuleCard'
+import HeaderCard from '../../components/home/HeaderCard' // Add this import
 import { useNavigate } from 'react-router-dom';
-import Sidebar from './components/Sidebar';
 import { modulesData } from '../../fakeJsons/ModuleData';
 import { headerCards } from '../../fakeJsons/headerData';
 
@@ -34,7 +33,7 @@ export default function Home() {
 
 
         {/* Header Cards */}
-        <div className="max-w-7xl mx-auto mb-8">
+        <div className="max-w-full mx-auto mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {headerCards.map((card) => (
               <HeaderCard
@@ -49,7 +48,7 @@ export default function Home() {
 
       <div className="max-w-full flex gap-6">
         {/* Module Cards Grid */}
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-full mx-auto">
           {/* Search Results Info */}
           {searchTerm && (
             <div className="mb-6">
@@ -82,7 +81,7 @@ export default function Home() {
             </div>
           )}
           {/* Search Bar */}
-          <div className="max-w-full mb-8 flex justify-between align-middle bg-blue-50 p-2 rounded-2xl">
+          <div className="max-w-full mb-8 flex justify-between align-middle bg-blue-100 p-2 rounded-2xl">
             <div>
               <h3
                 className="text-xl font-bold text-blue-900 text-center pt-3 ml-3"
@@ -119,7 +118,7 @@ export default function Home() {
 
           {/* Module Cards Grid */}
           {filteredModules.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
               {filteredModules.map((module) => (
                 <ModuleCard
                   key={module.id}

@@ -1,45 +1,66 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Eye, EyeOff, RefreshCw } from "lucide-react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    captcha: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [captchaValue, setCaptchaValue] = useState("A7B9X1");
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     const newFormData = { ...formData, [name]: value };
     setFormData(newFormData);
 
-    // Check if form is valid
-    const isValid =
-      newFormData.email &&
-      newFormData.password &&
-      newFormData.captcha &&
-      newFormData.captcha.toUpperCase() === captchaValue.toUpperCase();
+    const isValid = newFormData.email && newFormData.password;
     setIsFormValid(isValid);
+
+    if (error) setError("");
   };
 
-  const refreshCaptcha = () => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let result = "";
-    for (let i = 0; i < 6; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    setCaptchaValue(result);
-    setFormData({ ...formData, captcha: "" });
-    setIsFormValid(false);
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const handleSubmit = () => {
-    if (isFormValid) {
-      console.log("Login submitted:", formData);
-      // Add your login logic here
+    if (!isFormValid) return;
+
+    setIsLoading(true);
+    setError("");
+
+
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/login`, {
+        username: formData.email,
+      });
+
+      console.log('Login successful:', response.data);
+
+      if (response.data.length > 0) {
+        navigate('/');
+      } else {
+        setError("Username is incorrect. Please check your login ID.");
+      }
+
+    } catch (error) {
+      console.error('Login failed:', error);
+
+      // Handle different error scenarios
+      if (error.response?.status === 401) {
+        setError("Invalid credentials. Please check your email and password.");
+      } else if (error.response?.status === 500) {
+        setError("Server error. Please try again later.");
+      } else {
+        setError("Login failed. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -54,17 +75,14 @@ export default function Login() {
               alt="EPL India"
               className="w-20 h-auto rounded-lg mr-5"
             />
-            <span className="text-2xl font-bold bg-gradient-to-r from-[#0a2f6f] to-[#9ac943] bg-clip-text text-transparent" >
+            <span className="text-2xl font-bold bg-gradient-to-r from-[#0a2f6f] to-[#9ac943] bg-clip-text text-transparent">
               EPL India
             </span>
           </div>
 
           {/* Welcome Text */}
           <div className="mb-8">
-            <h1
-              className="text-xl font-bold mb-2 "
-              style={{ color: "#0a2f6f" }}
-            >
+            <h1 className="text-xl font-bold mb-2" style={{ color: "#0a2f6f" }}>
               Welcome Back
             </h1>
             <p className="text-gray-500 text-sm">
@@ -73,21 +91,29 @@ export default function Login() {
           </div>
 
           {/* Login Form */}
-          <div className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+                {error}
+              </div>
+            )}
+
             {/* Email Field */}
             <div className="relative">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
+                Login ID
               </label>
               <div className="relative">
                 <input
-                  type="email"
+                  type="text"
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full text-sm px-2 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="Enter your email"
+                  className="w-full text-sm px-2 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-all"
+                  placeholder="Enter your login Id"
                   required
+                  disabled={isLoading}
                 />
                 <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
                   <svg
@@ -118,68 +144,42 @@ export default function Login() {
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full text-sm px-2 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all pr-12"
+                  className="w-full text-sm px-2 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent transition-all pr-12"
                   placeholder="Enter your password"
                   required
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  disabled={isLoading}
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
             </div>
 
-            {/* CAPTCHA Field */}
-            <div className="relative">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                CAPTCHA
-              </label>
-              <div className="flex space-x-3">
-                <div className="flex-1 relative">
-                  <input
-                    type="text"
-                    name="captcha"
-                    value={formData.captcha}
-                    onChange={handleInputChange}
-                    className="w-full text-sm px-2 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                    placeholder="Enter CAPTCHA"
-                    required
-                  />
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div
-                    className="px-3 py-2 rounded-xl text-white font-bold text-lg tracking-wider select-none bg-gradient-to-r from-[#0a2f6f] to-[#0f4c81]"
-                  >
-                    {captchaValue}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={refreshCaptcha}
-                    className="p-3 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors"
-                  >
-                    <RefreshCw size={20} className="text-gray-600" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
             {/* Login Button */}
             <button
-              onClick={handleSubmit}
-              disabled={!isFormValid}
-              className={`w-full py-3 rounded-xl font-semibold text-white transition-all transform hover:scale-105 ${
-                isFormValid
+              type="submit"
+              disabled={!isFormValid || isLoading}
+              className={`w-full py-3 rounded-xl font-semibold text-white transition-all transform hover:scale-105 flex items-center justify-center ${isFormValid && !isLoading
                   ? "bg-blue-600 hover:bg-blue-700 shadow-lg"
                   : "bg-gray-300 cursor-not-allowed"
-              }`}
-              style={{ backgroundColor: isFormValid ? "#0a2f6f" : undefined }}
+                }`}
+              style={{ backgroundColor: isFormValid && !isLoading ? "#0a2f6f" : undefined }}
             >
-              Continue
+              {isLoading ? (
+                <>
+                  <RefreshCw size={20} className="animate-spin mr-2" />
+                  Logging in...
+                </>
+              ) : (
+                "Continue"
+              )}
             </button>
-          </div>
+          </form>
         </div>
 
         {/* Right Section - Image */}

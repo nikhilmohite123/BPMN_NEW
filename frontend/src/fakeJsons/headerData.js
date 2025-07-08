@@ -4,8 +4,8 @@ export const headerCards = [
       title: 'Document Management System',
       description: 'Organize and manage all your documents efficiently',
       icon: '📄',
-      color: '#3B82F6',
-      bgColor: '#EBF4FF',
+      color: '#e91e63',
+      bgColor: '#fce4ec',
     href: '/document_management_system'
     },
     {
@@ -13,8 +13,8 @@ export const headerCards = [
       title: 'Survey',
       description: 'Create and manage surveys for data collection',
       icon: '📊',
-      color: '#10B981',
-      bgColor: '#ECFDF5',
+      color: '#2e7d32',
+      bgColor: '#e8f5e8',
     href: '/servey'
 
     },
@@ -23,8 +23,8 @@ export const headerCards = [
       title: 'Upcoming Activities',
       description: 'Stay updated with scheduled events and activities',
       icon: '📅',
-      color: '#8B5CF6',
-      bgColor: '#F3E8FF',
+      color: '#9c27b0',
+      bgColor: '#f3e5f5',
     href: '/upcoming_activities'
 
     }

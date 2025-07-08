@@ -13,7 +13,7 @@ function Router() {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <>
-                <Route path='/login' element={<Login />} />
+                <Route path='/login' element={<Login />}/>
                 <Route path='/' element={<RootLayout />}>
                     <Route index element={<Home />} />
                     <Route path='/speakup' element={<SpeakUp/>}/>

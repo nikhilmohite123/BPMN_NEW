@@ -30,7 +30,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-sm border-gray-200 px-6 py-2 bg-gradient-to-br from-blue-50 to-blue-100 backdrop-blur ">
+    <nav className="sticky top-0 z-50 bg-white shadow-sm border-gray-200 px-6 py-2 bg-gradient-to-br from-blue-100 to-blue-300 backdrop-blur ">
       <div className="flex items-center justify-between max-w-full mx-auto">
         {/* Left side - Logo */}
         <div className="flex items-center">

@@ -38,15 +38,6 @@ export const modulesData = [
     href: '/Audit_tracker'
   },
   {
-    id: 'sdd-module',
-    name: 'SDD Module',
-    description: 'System Design Document management',
-    icon: Volume2,
-    color: '#7ac943',
-    bgColor: '#f1f8e9',
-    href: '/sddmodule'
-  },
-  {
     id: 'speak-up',
     name: 'Speak Up',
     description: 'Employee feedback and communication portal',
@@ -171,6 +162,15 @@ export const modulesData = [
     color: '#009688',
     bgColor: '#e0f2f1',
     href: '/phoenix-project-list'
+  },
+    {
+    id: 'sdd-module',
+    name: 'SDD Module',
+    description: 'System Design Document management',
+    icon: Volume2,
+    color: '#7ac943',
+    bgColor: '#f1f8e9',
+    href: '/sddmodule'
   },
   {
     id: 'pi-evaluation',

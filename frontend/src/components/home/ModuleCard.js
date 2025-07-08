@@ -6,7 +6,7 @@ const ModuleCard = ({ module, onClick }) => {
  
   return (
     <div
-      className={`relative bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform ${
+      className={`relative bg-white rounded-2xl p-2 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform ${
         isHovered ? 'scale-105 -translate-y-2' : ''
       }`}
       onClick={() => onClick(module)}
@@ -23,7 +23,7 @@ const ModuleCard = ({ module, onClick }) => {
       {/* Icon Container */}
       <div className="flex items-center justify-center mb-4">
         <div
-          className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg transform transition-transform duration-300"
+          className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-lg transform transition-transform duration-300"
           style={{
             backgroundColor: module.bgColor,
             transform: isHovered ? 'rotate(5deg) scale(1.1)' : 'rotate(0deg) scale(1)'
@@ -39,7 +39,7 @@ const ModuleCard = ({ module, onClick }) => {
  
       {/* Module Name */}
       <h3
-        className="text-lg font-bold text-center mb-2 transition-colors duration-300"
+        className="text-md font-bold text-center mb-2 transition-colors duration-300"
         style={{ color: isHovered ? module.color : '#0a2f6f' }}
       >
         {module.name}
